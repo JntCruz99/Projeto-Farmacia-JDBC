@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+  <Properties>
+    <Property name="closable" type="boolean" value="true"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jLabel1" min="-2" pref="316" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel1" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jLabel1" max="32767" attributes="0"/>
+                  <Component id="jPanel1" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="284" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/src/img/farma ideal.png"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="66" red="0" type="rgb"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="21" max="32767" attributes="0"/>
+                  <Component id="jLabel3" min="-2" pref="264" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel3">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="24" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="PAINEL DE FARM&#xc1;CIA"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="jTable1">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="33" red="33" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="8" rowCount="12">
+                <Column editable="true" title="Dia" type="java.lang.Object">
+                  <Data value="01"/>
+                  <Data value="02"/>
+                  <Data value="03"/>
+                  <Data value="04"/>
+                  <Data value="05"/>
+                  <Data value="06"/>
+                  <Data value="07"/>
+                  <Data value="08"/>
+                  <Data value="09"/>
+                  <Data value="10"/>
+                  <Data value="11"/>
+                  <Data value="12"/>
+                </Column>
+                <Column editable="true" title="Sem" type="java.lang.Object">
+                  <Data value="s&#xe1;b"/>
+                  <Data value="dom"/>
+                  <Data value="seg"/>
+                  <Data value="ter"/>
+                  <Data value="qua"/>
+                  <Data value="qui"/>
+                  <Data value="sex"/>
+                  <Data value="s&#xe1;b"/>
+                  <Data value="dom"/>
+                  <Data value="seg"/>
+                  <Data value="ter"/>
+                  <Data value="qua"/>
+                </Column>
+                <Column editable="true" title="Meta Venda" type="java.lang.Object">
+                  <Data value="26.400"/>
+                  <Data value="20.800"/>
+                  <Data value="35.200"/>
+                  <Data value="35.700"/>
+                  <Data value="30.800"/>
+                  <Data value="35.400"/>
+                  <Data value="22.200"/>
+                  <Data value="20.800"/>
+                  <Data value="21.100"/>
+                  <Data value="35.400"/>
+                  <Data value="36.000"/>
+                  <Data value="31.100"/>
+                </Column>
+                <Column editable="true" title="Meta Acumulada" type="java.lang.Object">
+                  <Data value="26.400"/>
+                  <Data value="47.200"/>
+                  <Data value="82.400"/>
+                  <Data value="118.100"/>
+                  <Data value="148.900"/>
+                  <Data value="184.300"/>
+                  <Data value="206.500"/>
+                  <Data value="227.300"/>
+                  <Data value="248.400"/>
+                  <Data value="283.800"/>
+                  <Data value="319.800"/>
+                  <Data value="350.900"/>
+                </Column>
+                <Column editable="true" title="Venda" type="java.lang.Object">
+                  <Data value="34.586"/>
+                  <Data value="23.882"/>
+                  <Data value="28.378"/>
+                  <Data value="30.383"/>
+                  <Data value="30.861"/>
+                  <Data value="36.337"/>
+                  <Data value="21.780"/>
+                  <Data value="23.988"/>
+                  <Data value="16.403"/>
+                  <Data value="36.803"/>
+                  <Data value="38.258"/>
+                  <Data value="38.761"/>
+                </Column>
+                <Column editable="true" title="Venda Acumulada" type="java.lang.Object">
+                  <Data value="34.586"/>
+                  <Data value="58.469"/>
+                  <Data value="86.847"/>
+                  <Data value="117.230"/>
+                  <Data value="148.090"/>
+                  <Data value="184.427"/>
+                  <Data value="206.207"/>
+                  <Data value="230.195"/>
+                  <Data value="246.598"/>
+                  <Data value="283.401"/>
+                  <Data value="321.659"/>
+                  <Data value="360.420"/>
+                </Column>
+                <Column editable="true" title="Cumpr meta vend" type="java.lang.Object">
+                  <Data value="131.01%"/>
+                  <Data value="114.82%"/>
+                  <Data value="80.62%"/>
+                  <Data value="85.11%"/>
+                  <Data value="100.20%"/>
+                  <Data value="102.65%"/>
+                  <Data value="98.11%"/>
+                  <Data value="115.33%"/>
+                  <Data value="77.74%"/>
+                  <Data value="103.96%"/>
+                  <Data value="106.27%"/>
+                  <Data value="124.63%"/>
+                </Column>
+                <Column editable="true" title="Cumpr meta acum" type="java.lang.Object">
+                  <Data value="103.01%"/>
+                  <Data value="123.87%"/>
+                  <Data value="105.40%"/>
+                  <Data value="99.26%"/>
+                  <Data value="99.46%"/>
+                  <Data value="100.07%"/>
+                  <Data value="99.86%"/>
+                  <Data value="101.27%"/>
+                  <Data value="99.27%"/>
+                  <Data value="99.86%"/>
+                  <Data value="100.58%"/>
+                  <Data value="102.71%"/>
+                </Column>
+              </Table>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
