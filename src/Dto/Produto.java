@@ -5,7 +5,18 @@ public class Produto {
     private String concentração;
     private double preco;
     private int qtd;
+    
+     public Produto() {
 
+    }
+    public Produto(String nome, String fabricante, String concentração, double preco, int qtd) {
+        this.nome = nome;
+        this.fabricante = fabricante;
+        this.concentração = concentração;
+        this.preco = preco;
+        this.qtd = qtd;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -44,6 +55,10 @@ public class Produto {
 
     public void setQtd(int qtd) {
         this.qtd = qtd;
+    }
+       @Override
+    public String toString() {
+        return getNome(); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

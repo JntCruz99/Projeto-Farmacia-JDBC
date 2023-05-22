@@ -164,15 +164,15 @@ public class produtos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Produto produtos = new Produto();
-        produtos.setNome(jTextField1.getText());
-        produtos.setFabricante(jTextField2.getText());
-        produtos.setConcentração(jTextField3.getText());
-        produtos.setPreco(Double.parseDouble(jTextField4.getText()));
+  
+        String Nome = (jTextField1.getText());
+        String Fabricante = (jTextField2.getText());
+        String Concentração = (jTextField3.getText());
+        double Preco = (Double.parseDouble(jTextField4.getText()));
         String quantidadeSelecionado = (String) jComboBox1.getSelectedItem();
         int quantidade = Integer.parseInt(quantidadeSelecionado);
-        produtos.setQtd(quantidade);
-        
+
+        Produto produtos = new Produto(Nome, Fabricante, Concentração, Preco, quantidade);
 
         // fazendo a validação dos dados
         if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty()||jTextField4.getText().isEmpty()) {

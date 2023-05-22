@@ -1,12 +1,12 @@
 package GUI;
 
-
 import DAO.ClienteD;
 import Dto.Cliente;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author autologon
@@ -204,28 +204,26 @@ public class cadastro extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Cliente clientes = new Cliente();
-        clientes.setNome(jTextField1.getText());
-        clientes.setEndereco(jTextField2.getText());
-        clientes.setTelefone(jTextField3.getText());
-        clientes.setEmail(jTextField4.getText());
-        clientes.setCpf(jTextField9.getText());
-        clientes.setRg(jTextField10.getText());
-        String sexo = "";
-            if (jRadioButton1.isSelected()) {
-                sexo = "M";
-            } else if (jRadioButton2.isSelected()) {
-                sexo = "F";
-            }
-        clientes.setSexo(sexo);
 
-        
+        String Nome = (jTextField1.getText());
+        String Endereco = (jTextField2.getText());
+        String Telefone = (jTextField3.getText());
+        String Email = (jTextField4.getText());
+        String Cpf = (jTextField9.getText());
+        String Rg = (jTextField10.getText());
+        String sexo = "";
+
+        if (jRadioButton1.isSelected()) {
+            sexo = "M";
+        } else if (jRadioButton2.isSelected()) {
+            sexo = "F";
+        }
+        Cliente clientes = new Cliente(Nome, Endereco, Telefone, Email, Cpf, Rg, sexo);
 
         // fazendo a validação dos dados
-        if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty()||jTextField4.getText().isEmpty()||jTextField9.getText().isEmpty()||jTextField10.getText().isEmpty() || sexo == "") {
+        if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty() || jTextField4.getText().isEmpty() || jTextField9.getText().isEmpty() || jTextField10.getText().isEmpty() || sexo == "") {
             JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios");
-        }
-        else {
+        } else {
 
             try {
                 // instanciando a classe UsuarioDAO do pacote dao e criando seu objeto dao
@@ -234,7 +232,7 @@ public class cadastro extends javax.swing.JInternalFrame {
                 Cliente cliente = dao.buscarPorCPF(cpf);
                 if (cliente != null) {
                     // Faça algo com o cliente retornado
-                    JOptionPane.showMessageDialog(null, "ERRO: CPF "+cpf+" JA CADASTRADO NO BANCO DE DADOS");
+                    JOptionPane.showMessageDialog(null, "ERRO: CPF " + cpf + " JA CADASTRADO NO BANCO DE DADOS");
                 } else {
                     // Cliente não encontrado
                     try {
@@ -242,13 +240,13 @@ public class cadastro extends javax.swing.JInternalFrame {
                     } catch (SQLException ex) {
                         Logger.getLogger(Dto.Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    JOptionPane.showMessageDialog(null, "Cliente "+jTextField1.getText()+" inserido com sucesso! ");
-                    
+                    JOptionPane.showMessageDialog(null, "Cliente " + jTextField1.getText() + " inserido com sucesso! ");
+
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(cadastro.class.getName()).log(Level.SEVERE, null, ex);
             }
-            }
+        }
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");

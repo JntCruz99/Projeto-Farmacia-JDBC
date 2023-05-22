@@ -7,7 +7,20 @@ public class Cliente {
     private String cpf;
     private String rg;
     private String sexo;
+    
+     public Cliente() {
 
+    }
+    public Cliente(String nome, String endereco, String telefone, String email, String cpf, String rg, String sexo) {
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.email = email;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.sexo = sexo;
+    }
+    
     public String getNome() {
         return nome;
     }

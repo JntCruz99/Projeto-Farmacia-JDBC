@@ -2,10 +2,12 @@
 package DAO;
 import Dto.Produto;
 import connection.ConexaoUtil;
-import java.awt.List;
-import java.sql.*;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
+import java.sql.SQLException;
+
+
+
 
 public class ProdutoD {
     public void inserir(Produto produto) throws SQLException{
@@ -26,4 +28,7 @@ public class ProdutoD {
         }catch(Exception e){
             e.printStackTrace();
         }
-}}
+        }
+    
+     
+}
