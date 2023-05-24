@@ -1,20 +1,28 @@
 package Dto;
 public class Produto {
+    private int id;
     private String nome;
     private String fabricante;
-    private String concentração;
+    private String concentracao;
     private double preco;
     private int qtd;
     
      public Produto() {
 
     }
-    public Produto(String nome, String fabricante, String concentração, double preco, int qtd) {
+    public Produto(String nome, String fabricante, String concentracao, double preco, int qtd) {
         this.nome = nome;
         this.fabricante = fabricante;
-        this.concentração = concentração;
+        this.concentracao = concentracao;
         this.preco = preco;
         this.qtd = qtd;
+    }
+        public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     public String getNome() {
@@ -33,12 +41,12 @@ public class Produto {
         this.fabricante = fabricante;
     }
 
-    public String getConcentração() {
-        return concentração;
+    public String getConcentracao() {
+        return concentracao;
     }
 
-    public void setConcentração(String concentração) {
-        this.concentração = concentração;
+    public void setConcentracao(String concentracao) {
+        this.concentracao = concentracao;
     }
 
     public double getPreco() {

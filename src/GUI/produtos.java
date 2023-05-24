@@ -167,12 +167,12 @@ public class produtos extends javax.swing.JInternalFrame {
   
         String Nome = (jTextField1.getText());
         String Fabricante = (jTextField2.getText());
-        String Concentração = (jTextField3.getText());
+        String Concentracao = (jTextField3.getText());
         double Preco = (Double.parseDouble(jTextField4.getText()));
         String quantidadeSelecionado = (String) jComboBox1.getSelectedItem();
         int quantidade = Integer.parseInt(quantidadeSelecionado);
 
-        Produto produtos = new Produto(Nome, Fabricante, Concentração, Preco, quantidade);
+        Produto produtos = new Produto(Nome, Fabricante, Concentracao, Preco, quantidade);
 
         // fazendo a validação dos dados
         if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty()||jTextField4.getText().isEmpty()) {
