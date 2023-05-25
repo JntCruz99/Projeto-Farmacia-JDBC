@@ -93,7 +93,7 @@ public class ProdutoD {
                 produto.setId(rs.getInt("id"));
                 produto.setNome(rs.getString("nome"));
                 produto.setFabricante(rs.getString("fabricante"));
-                produto.setConcentracao(rs.getString("fabricante"));
+                produto.setConcentracao(rs.getString("concentracao"));
                 produto.setQtd(rs.getInt("qtd"));
                 produto.setPreco(rs.getDouble("preco"));
                 produtos.add(produto);
@@ -116,13 +116,14 @@ public class ProdutoD {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("UPDATE produto SET nome = ? ,fabricante = ?,concentracao = ?,preco = ? WHERE id = ?");
+            stmt = con.prepareStatement("UPDATE produtos SET nome = ? ,fabricante = ?,concentracao = ?,preco = ?,qtd = ? WHERE id = ?");
             
             stmt.setString(1, p.getNome());
             stmt.setString(2, p.getFabricante());
             stmt.setString(3, p.getConcentracao());
             stmt.setDouble(4, p.getPreco());
             stmt.setInt(5, p.getQtd());
+            stmt.setInt(6, p.getId());
 
             stmt.executeUpdate();
 
@@ -141,7 +142,7 @@ public class ProdutoD {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("DELETE FROM produto WHERE id = ?");
+            stmt = con.prepareStatement("DELETE FROM produtos WHERE id = ?");
             stmt.setInt(1, p.getId());
 
             stmt.executeUpdate();
