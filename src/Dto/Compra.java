@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Compra {
 
+    private int id;
     private Cliente cliente;
     private List<Produto> produtos;
     private String status;
@@ -19,6 +20,14 @@ public class Compra {
         this.produtos = produtos;
         this.status = status;
         this.forma_pagamento = forma_pagamento;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getStatus() {
@@ -74,6 +83,7 @@ public class Compra {
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
+
     public String getClienteCPF() {
         return cliente.getCpf();
     }

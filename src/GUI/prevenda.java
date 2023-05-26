@@ -12,7 +12,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,7 +26,7 @@ public class prevenda extends javax.swing.JInternalFrame {
     public prevenda() {
         initComponents();
         CarrinhoFechado();
-        
+
     }
 
     public void FecharSelecaoCliente() {
@@ -80,8 +82,9 @@ public class prevenda extends javax.swing.JInternalFrame {
         }
 
     }
+
     public void BuscarProduto(String desc) {
-        
+
         DefaultTableModel modelo = (DefaultTableModel) ProdutosT.getModel();
         modelo.setNumRows(0);
         ProdutoD pdao = new ProdutoD();
@@ -98,9 +101,27 @@ public class prevenda extends javax.swing.JInternalFrame {
             });
 
         }
-
     }
-        public void IniciarCompra(){
+
+    public int BuscarId() {
+        CompraD id = new CompraD();
+        int idd = id.UltimaCompra();
+        return idd;
+    }
+
+    public Void AddProduto(int idcompra, int idproduto, int qtd) {
+        CompraD add = new CompraD();
+        add.AdicionarProduto(idcompra, idproduto, qtd);
+        return null;
+    }
+
+    public Void RemoverProduto(int idcompra, int idproduto, int qtd) {
+        CompraD add = new CompraD();
+        add.RemoverProduto(idcompra, idproduto, qtd);
+        return null;
+    }
+
+    public void IniciarCompra() {
         String NomeC = (NomeCliente.getText());
         String Cpf = (CpfCliente.getText());
         Cliente cliente = new Cliente();
@@ -108,24 +129,41 @@ public class prevenda extends javax.swing.JInternalFrame {
         cliente.setCpf(Cpf);
         String status = "Pendente";
         String FormaDeP = "";
-        
+
         Compra compra = new Compra();
         compra.setCliente(cliente);
         compra.setStatus(status);
         compra.setForma_pagamento(FormaDeP);
 
-       
-
-            // instanciando a classe UsuarioDAO do pacote dao e criando seu objeto dao
-            CompraD dao = new CompraD();
-            try {
-                dao.InserirCompra(compra);
-            } catch (SQLException ex) {
-                Logger.getLogger(produtos.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        
+        // instanciando a classe UsuarioDAO do pacote dao e criando seu objeto dao
+        CompraD dao = new CompraD();
+        try {
+            dao.InserirCompra(compra);
+        } catch (SQLException ex) {
+            Logger.getLogger(produtos.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public void BuscarCarrinho(int id) {
+        DefaultTableModel modelo = (DefaultTableModel) CarrinhoT.getModel();
+        modelo.setNumRows(0);
+        ProdutoD pdao = new ProdutoD();
+
+        for (Produto p : pdao.BuscarId(id)) {
+
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getNome(),
+                p.getFabricante(),
+                p.getConcentracao(),
+                p.getPreco(),
+                p.getQtd()
+            });
+
+        }
+    }
+
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -154,6 +192,10 @@ public class prevenda extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         CpfCliente = new javax.swing.JLabel();
         Status = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 0, 255));
         setClosable(true);
@@ -260,6 +302,11 @@ public class prevenda extends javax.swing.JInternalFrame {
         });
 
         jButton4.setText("Add. no carrinho");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         NomeCliente.setFont(new java.awt.Font("Segoe UI Historic", 1, 16)); // NOI18N
         NomeCliente.setForeground(new java.awt.Color(255, 255, 51));
@@ -274,6 +321,27 @@ public class prevenda extends javax.swing.JInternalFrame {
         Status.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Status.setForeground(new java.awt.Color(51, 255, 51));
 
+        jButton5.setText("Finalizar Compra");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 51));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("ID DA COMPRA:");
+
+        jButton6.setText("Remover Iten");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -285,16 +353,20 @@ public class prevenda extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(NomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Status))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(Status)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 327, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(NomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -327,7 +399,13 @@ public class prevenda extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(221, 221, 221)
+                .addComponent(jButton6)
+                .addGap(64, 64, 64)
+                .addComponent(jButton5)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,7 +426,7 @@ public class prevenda extends javax.swing.JInternalFrame {
                             .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3)
                             .addComponent(jButton4))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,7 +436,9 @@ public class prevenda extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(Status))
+                            .addComponent(Status)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -367,7 +447,11 @@ public class prevenda extends javax.swing.JInternalFrame {
                             .addComponent(CpfCliente))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(4, 4, 4)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton6))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -432,6 +516,8 @@ public class prevenda extends javax.swing.JInternalFrame {
                 CarrinhoAberto();
                 FecharSelecaoCliente();
                 IniciarCompra();
+                jLabel4.setText(Integer.toString(BuscarId()));
+
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Cliente");
@@ -442,6 +528,56 @@ public class prevenda extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         BuscarProduto(campoNome.getText());
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        IniciarCompra();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = ProdutosT.getSelectedRow();
+
+        if (selectedRow != -1) {
+
+            int idc = Integer.parseInt(jLabel4.getText());
+            int idp = Integer.parseInt(ProdutosT.getValueAt(ProdutosT.getSelectedRow(), 0).toString());
+            String input = JOptionPane.showInputDialog("Quantidade:");
+
+            int q = Integer.parseInt(input);
+
+            if (idp != 0) {
+                AddProduto(idc, idp, q);
+                BuscarCarrinho(idc);
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Produto");
+        }
+
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = CarrinhoT.getSelectedRow();
+
+        if (selectedRow != -1) {
+
+            int idc = Integer.parseInt(jLabel4.getText());
+            int idp = Integer.parseInt(ProdutosT.getValueAt(CarrinhoT.getSelectedRow(), 0).toString());
+            String input = JOptionPane.showInputDialog("Quantidade:");
+
+            int q = Integer.parseInt(input);
+
+            if (idp != 0) {
+                RemoverProduto(idc, idp, q);
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Produto");
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -457,12 +593,16 @@ public class prevenda extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

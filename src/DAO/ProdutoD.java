@@ -154,6 +154,48 @@ public class ProdutoD {
             ConnectionFactory.closeConnection(con, stmt);
         }
 
+    }public List<Produto> BuscarId(int id) {
+
+        Connection con = ConnectionFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Produto> produtos = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("""
+                                        SELECT produtos.ID, produtos.NOME, produtos.FABRICANTE, produtos.CONCENTRACAO, produtos.PRECO, COALESCE(SUM(Compra_Produto.quantidade), 0) AS quantidade_total
+                                        FROM produtos
+                                        LEFT JOIN Compra_Produto ON produtos.ID = Compra_Produto.produto_id
+                                        LEFT JOIN Compra ON Compra.id = Compra_Produto.compra_id
+                                        WHERE Compra.id = ?
+                                        GROUP BY produtos.ID, produtos.NOME, produtos.FABRICANTE, produtos.CONCENTRACAO, produtos.PRECO""");
+            stmt.setInt(1, id);
+            
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Produto produto = new Produto();
+
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setFabricante(rs.getString("fabricante"));
+                produto.setConcentracao(rs.getString("concentracao"));              
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setQtd(rs.getInt("quantidade_total"));
+                produtos.add(produto);
+            }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(ProdutoD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+
+        return produtos;
+
     }
      
 }
