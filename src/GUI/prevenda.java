@@ -1,5 +1,11 @@
 package GUI;
 
+import DAO.ClienteD;
+import DAO.CompraD;
+import DAO.ProdutoD;
+import Dto.Cliente;
+import Dto.Compra;
+import Dto.Produto;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,17 +14,118 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author jonata
  */
 public class prevenda extends javax.swing.JInternalFrame {
 
-   
     public prevenda() {
         initComponents();
+        CarrinhoFechado();
+        
+    }
+
+    public void FecharSelecaoCliente() {
+        cliente.setEnabled(false);
+        jButton1.setEnabled(false);
+        jButton2.setEnabled(false);
+        TabelaCliente.setEnabled(false);
+    }
+
+    public void AbrirSelecaoCliente() {
+        cliente.setEnabled(true);
+        jButton1.setEnabled(true);
+        jButton2.setEnabled(true);
+        TabelaCliente.setEnabled(true);
+    }
+
+    public void CarrinhoFechado() {
+
+        Status.setText("Fechado");
+        jTextField1.setEnabled(false);
+        campoNome.setEnabled(false);
+        jButton3.setEnabled(false);
+        jButton4.setEnabled(false);
+        ProdutosT.setEnabled(false);
+        CarrinhoT.setEnabled(false);
+    }
+
+    public void CarrinhoAberto() {
+
+        Status.setText("Aberto");
+        jTextField1.setEnabled(true);
+        campoNome.setEnabled(true);
+        jButton3.setEnabled(true);
+        jButton4.setEnabled(true);
+        ProdutosT.setEnabled(true);
+        CarrinhoT.setEnabled(true);
+    }
+
+    public void BuscarCliente(String nome) {
+
+        DefaultTableModel modelo = (DefaultTableModel) TabelaCliente.getModel();
+        modelo.setNumRows(0);
+        ClienteD cdao = new ClienteD();
+
+        for (Cliente c : cdao.BuscarCliente(nome)) {
+
+            modelo.addRow(new Object[]{
+                c.getNome(),
+                c.getCpf()
+
+            });
+
         }
 
+    }
+    public void BuscarProduto(String desc) {
+        
+        DefaultTableModel modelo = (DefaultTableModel) ProdutosT.getModel();
+        modelo.setNumRows(0);
+        ProdutoD pdao = new ProdutoD();
+
+        for (Produto p : pdao.readForDesc(desc)) {
+
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getNome(),
+                p.getFabricante(),
+                p.getConcentracao(),
+                p.getPreco(),
+                p.getQtd()
+            });
+
+        }
+
+    }
+        public void IniciarCompra(){
+        String NomeC = (NomeCliente.getText());
+        String Cpf = (CpfCliente.getText());
+        Cliente cliente = new Cliente();
+        cliente.setNome(NomeC);
+        cliente.setCpf(Cpf);
+        String status = "Pendente";
+        String FormaDeP = "";
+        
+        Compra compra = new Compra();
+        compra.setCliente(cliente);
+        compra.setStatus(status);
+        compra.setForma_pagamento(FormaDeP);
+
+       
+
+            // instanciando a classe UsuarioDAO do pacote dao e criando seu objeto dao
+            CompraD dao = new CompraD();
+            try {
+                dao.InserirCompra(compra);
+            } catch (SQLException ex) {
+                Logger.getLogger(produtos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        
+        }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -32,17 +139,21 @@ public class prevenda extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        CarrinhoT = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        ProdutosT = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        TabelaCliente = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        NomeCliente = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        CpfCliente = new javax.swing.JLabel();
+        Status = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 255));
         setClosable(true);
@@ -69,7 +180,7 @@ public class prevenda extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        CarrinhoT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -77,23 +188,23 @@ public class prevenda extends javax.swing.JInternalFrame {
                 "id", "nome", "fabricante", "concentração", "preco", "qtd"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        CarrinhoT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                CarrinhoTMouseClicked(evt);
             }
         });
-        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+        CarrinhoT.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTable1KeyReleased(evt);
+                CarrinhoTKeyReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(CarrinhoT);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("CARRINHO:");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        ProdutosT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -101,23 +212,23 @@ public class prevenda extends javax.swing.JInternalFrame {
                 "id", "nome", "fabricante", "concentração", "preco", "qtd"
             }
         ));
-        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+        ProdutosT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable2MouseClicked(evt);
+                ProdutosTMouseClicked(evt);
             }
         });
-        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+        ProdutosT.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTable2KeyReleased(evt);
+                ProdutosTKeyReleased(evt);
             }
         });
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(ProdutosT);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("CLIENTE:");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -125,15 +236,43 @@ public class prevenda extends javax.swing.JInternalFrame {
                 "Nome", "Cpf"
             }
         ));
-        jScrollPane2.setViewportView(jTable3);
+        jScrollPane2.setViewportView(TabelaCliente);
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Selecionar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Buscar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Add. no carrinho");
+
+        NomeCliente.setFont(new java.awt.Font("Segoe UI Historic", 1, 16)); // NOI18N
+        NomeCliente.setForeground(new java.awt.Color(255, 255, 51));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("CPF:");
+
+        CpfCliente.setFont(new java.awt.Font("Segoe UI Historic", 1, 16)); // NOI18N
+        CpfCliente.setForeground(new java.awt.Color(255, 255, 51));
+
+        Status.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Status.setForeground(new java.awt.Color(51, 255, 51));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,11 +283,22 @@ public class prevenda extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Status)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(NomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -177,7 +327,7 @@ public class prevenda extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +348,7 @@ public class prevenda extends javax.swing.JInternalFrame {
                             .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3)
                             .addComponent(jButton4))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,12 +356,18 @@ public class prevenda extends javax.swing.JInternalFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(Status))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(NomeCliente)
+                            .addComponent(jLabel3)
+                            .addComponent(CpfCliente))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -241,26 +397,60 @@ public class prevenda extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void CarrinhoTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CarrinhoTMouseClicked
         // TODO add your handling code here:
- 
-    }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
-        // TODO add your handling code here:
-   
-    }//GEN-LAST:event_jTable1KeyReleased
+    }//GEN-LAST:event_CarrinhoTMouseClicked
 
-    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+    private void CarrinhoTKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CarrinhoTKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable2MouseClicked
 
-    private void jTable2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyReleased
+    }//GEN-LAST:event_CarrinhoTKeyReleased
+
+    private void ProdutosTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProdutosTMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable2KeyReleased
+    }//GEN-LAST:event_ProdutosTMouseClicked
+
+    private void ProdutosTKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ProdutosTKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ProdutosTKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        BuscarCliente(cliente.getText());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = TabelaCliente.getSelectedRow();
+        if (selectedRow != -1) {
+            Object selectedValue = TabelaCliente.getValueAt(selectedRow, 0);
+            NomeCliente.setText(selectedValue.toString());
+            CpfCliente.setText(TabelaCliente.getValueAt(TabelaCliente.getSelectedRow(), 1).toString());
+            String verif = CpfCliente.getText();
+            if (verif != "") {
+                CarrinhoAberto();
+                FecharSelecaoCliente();
+                IniciarCompra();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Cliente");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        BuscarProduto(campoNome.getText());
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable CarrinhoT;
+    private javax.swing.JLabel CpfCliente;
+    private javax.swing.JLabel NomeCliente;
+    private javax.swing.JTable ProdutosT;
+    private javax.swing.JLabel Status;
+    private javax.swing.JTable TabelaCliente;
     private javax.swing.JTextField campoNome;
     private javax.swing.JTextField cliente;
     private javax.swing.JButton jButton1;
@@ -269,6 +459,7 @@ public class prevenda extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -276,9 +467,6 @@ public class prevenda extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel labelTotal;
     // End of variables declaration//GEN-END:variables

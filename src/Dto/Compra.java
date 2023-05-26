@@ -1,10 +1,41 @@
 package Dto;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Compra {
+
     private Cliente cliente;
     private List<Produto> produtos;
+    private String status;
+    private String forma_pagamento;
+
+    public Compra() {
+
+    }
+
+    public Compra(Cliente cliente, List<Produto> produtos, String status, String forma_pagamento) {
+        this.cliente = cliente;
+        this.produtos = produtos;
+        this.status = status;
+        this.forma_pagamento = forma_pagamento;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getForma_pagamento() {
+        return forma_pagamento;
+    }
+
+    public void setForma_pagamento(String forma_pagamento) {
+        this.forma_pagamento = forma_pagamento;
+    }
 
     public Compra(Cliente cliente) {
         this.cliente = cliente;
@@ -28,7 +59,6 @@ public class Compra {
     }
 
     // Getters e setters
-
     public Cliente getCliente() {
         return cliente;
     }
@@ -43,5 +73,8 @@ public class Compra {
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
+    }
+    public String getClienteCPF() {
+        return cliente.getCpf();
     }
 }
