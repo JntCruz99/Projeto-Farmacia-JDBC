@@ -163,6 +163,25 @@ public class prevenda extends javax.swing.JInternalFrame {
 
         }
     }
+    public void AtualizarTotal(){
+        DefaultTableModel modelo = (DefaultTableModel) CarrinhoT.getModel();
+        int colunaASomar = 4; // Índice da coluna a ser somada
+        int qtd = 5; 
+        double soma = 0;
+        
+        // Percorra todas as linhas da JTable e some os valores da coluna especificada
+        for (int i = 0; i < CarrinhoT.getRowCount(); i++) {
+            double valor = (double) CarrinhoT.getValueAt(i, colunaASomar);
+            int valorq = (int) CarrinhoT.getValueAt(i, qtd);
+            valor = valor * valorq;
+            soma += valor;
+        }
+        jTextField1.setText(Double.toString(soma));
+        System.out.println(soma);
+        
+    
+    }
+    
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -549,6 +568,8 @@ public class prevenda extends javax.swing.JInternalFrame {
             if (idp != 0) {
                 AddProduto(idc, idp, q);
                 BuscarCarrinho(idc);
+                BuscarProduto(campoNome.getText());
+                AtualizarTotal();
 
             }
         } else {
@@ -565,13 +586,14 @@ public class prevenda extends javax.swing.JInternalFrame {
         if (selectedRow != -1) {
 
             int idc = Integer.parseInt(jLabel4.getText());
-            int idp = Integer.parseInt(ProdutosT.getValueAt(CarrinhoT.getSelectedRow(), 0).toString());
-            String input = JOptionPane.showInputDialog("Quantidade:");
-
-            int q = Integer.parseInt(input);
+            int idp = Integer.parseInt(CarrinhoT.getValueAt(CarrinhoT.getSelectedRow(), 0).toString());
+            int q = Integer.parseInt(CarrinhoT.getValueAt(CarrinhoT.getSelectedRow(), 5).toString());
 
             if (idp != 0) {
                 RemoverProduto(idc, idp, q);
+                BuscarCarrinho(idc);
+                BuscarProduto(campoNome.getText());
+                AtualizarTotal();
 
             }
         } else {
