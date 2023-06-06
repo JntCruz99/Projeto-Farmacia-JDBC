@@ -10,17 +10,30 @@ public class Compra {
     private List<Produto> produtos;
     private String status;
     private String forma_pagamento;
+    private int qtd_itens;
 
     public Compra() {
 
     }
 
-    public Compra(Cliente cliente, List<Produto> produtos, String status, String forma_pagamento) {
+    public Compra(int id, Cliente cliente, List<Produto> produtos, String status, String forma_pagamento, int qtd_itens) {
+        this.id = id;
         this.cliente = cliente;
         this.produtos = produtos;
         this.status = status;
         this.forma_pagamento = forma_pagamento;
+        this.qtd_itens = qtd_itens;
     }
+
+    public int getQtd_itens() {
+        return qtd_itens;
+    }
+
+    public void setQtd_itens(int qtd_itens) {
+        this.qtd_itens = qtd_itens;
+    }
+
+ 
 
     public int getId() {
         return id;
@@ -87,4 +100,9 @@ public class Compra {
     public String getClienteCPF() {
         return cliente.getCpf();
     }
+    
+    public String getNomeCliente() {
+    return cliente.getNome();
+    }
+    
 }

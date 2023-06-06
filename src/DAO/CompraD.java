@@ -108,4 +108,46 @@ public class CompraD {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
+        public List<Compra> ComprasPendentes() {
+
+        Connection con = ConnectionFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Compra> compras = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("""
+                                        SELECT Compra.id, cliente.nome, COUNT(Compra_Produto.produto_id) AS quantidade_itens
+                                        FROM Compra
+                                        INNER JOIN cliente ON Compra.cliente_cpf = cliente.cpf
+                                        INNER JOIN Compra_Produto ON Compra.id = Compra_Produto.compra_id
+                                        WHERE Compra.status = 'pendente'
+                                        GROUP BY Compra.id, cliente.nome""");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                
+                Cliente cliente = new Cliente();
+                Compra compra = new Compra(cliente);
+                cliente.setNome(rs.getString("nome"));
+                compra.setId(rs.getInt("id"));
+                compra.setQtd_itens(rs.getInt("quantidade_itens"));
+
+                compras.add(compra);
+            }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(ProdutoD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+
+        return compras;
+
+    }
+
+   
 }

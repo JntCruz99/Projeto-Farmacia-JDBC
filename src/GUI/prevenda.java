@@ -89,7 +89,7 @@ public class prevenda extends javax.swing.JInternalFrame {
         modelo.setNumRows(0);
         ProdutoD pdao = new ProdutoD();
 
-        for (Produto p : pdao.readForDesc(desc)) {
+        for (Produto p : pdao.BuscarProdutoDesc(desc)) {
 
             modelo.addRow(new Object[]{
                 p.getId(),
@@ -150,7 +150,7 @@ public class prevenda extends javax.swing.JInternalFrame {
         modelo.setNumRows(0);
         ProdutoD pdao = new ProdutoD();
 
-        for (Produto p : pdao.BuscarId(id)) {
+        for (Produto p : pdao.BuscarIdCarrinho(id)) {
 
             modelo.addRow(new Object[]{
                 p.getId(),
@@ -550,7 +550,7 @@ public class prevenda extends javax.swing.JInternalFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        IniciarCompra();
+        dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

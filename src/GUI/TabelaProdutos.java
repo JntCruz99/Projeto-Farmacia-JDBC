@@ -48,7 +48,7 @@ public class TabelaProdutos extends javax.swing.JInternalFrame {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setNumRows(0);
         ProdutoD pdao = new ProdutoD();
-        for (Produto p : pdao.read()) {
+        for (Produto p : pdao.Produtos()) {
 
             modelo.addRow(new Object[]{
                 p.getId(),
@@ -68,7 +68,7 @@ public class TabelaProdutos extends javax.swing.JInternalFrame {
         modelo.setNumRows(0);
         ProdutoD pdao = new ProdutoD();
 
-        for (Produto p : pdao.readForDesc(desc)) {
+        for (Produto p : pdao.BuscarProdutoDesc(desc)) {
 
             modelo.addRow(new Object[]{
                 p.getId(),
@@ -339,7 +339,7 @@ public class TabelaProdutos extends javax.swing.JInternalFrame {
             p.setPreco(Double.parseDouble(jTextField6.getText()));
             p.setQtd(Integer.parseInt(jTextField7.getText()));
 
-            dao.update(p);
+            dao.UpdateProduto(p);
             
             jTextField2.setText("");
             jTextField3.setText("");
@@ -365,7 +365,7 @@ public class TabelaProdutos extends javax.swing.JInternalFrame {
 
             p.setId(Integer.parseInt(jTextField2.getText()));
             
-            dao.delete(p);
+            dao.DeleteProduto(p);
 
             jTextField2.setText("");
             jTextField3.setText("");

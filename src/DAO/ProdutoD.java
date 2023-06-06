@@ -36,7 +36,7 @@ public class ProdutoD {
             e.printStackTrace();
         }
         }
-    public List<Produto> read() {
+    public List<Produto> Produtos() {
 
         Connection con = ConnectionFactory.getConnection();
         
@@ -71,7 +71,7 @@ public class ProdutoD {
         return produtos;
 
     }
-    public List<Produto> readForDesc(String desc) {
+    public List<Produto> BuscarProdutoDesc(String desc) {
 
         Connection con = ConnectionFactory.getConnection();
         
@@ -109,7 +109,7 @@ public class ProdutoD {
 
     }
 
-    public void update(Produto p) {
+    public void UpdateProduto(Produto p) {
 
         Connection con = ConnectionFactory.getConnection();
         
@@ -135,7 +135,7 @@ public class ProdutoD {
         }
 
     }
-    public void delete(Produto p) {
+    public void DeleteProduto(Produto p) {
 
         Connection con = ConnectionFactory.getConnection();
         
@@ -154,7 +154,7 @@ public class ProdutoD {
             ConnectionFactory.closeConnection(con, stmt);
         }
 
-    }public List<Produto> BuscarId(int id) {
+    }public List<Produto> BuscarIdCarrinho(int id) {
 
         Connection con = ConnectionFactory.getConnection();
         

@@ -1,6 +1,8 @@
 package GUI;
 
 
+import DAO.CompraD;
+import Dto.Compra;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,72 +27,31 @@ public class prevendacompras extends javax.swing.JInternalFrame {
     /**
      * Creates new form prevendacompras
      */
-    private DefaultTableModel modeloTabela; 
-    private DefaultTableModel modeloTabela2; 
-    int linhaSelecionada;
+
 
 
    
     public prevendacompras() {
         initComponents();
-        modeloTabela = new DefaultTableModel(new Object[][] {}, new String[] {"Nome", "Itens", "Preço"}) {            
-            boolean[] canEdit = new boolean[] { false, false, false };
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];                      
-    }   
-        };
-        modeloTabela2 = new DefaultTableModel(new Object[][] {}, new String[] {"Nome", "Itens", "Preço"}) {            
-            boolean[] canEdit = new boolean[] { false, false, false };
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];                      
-    }   
-        };
-        jTable1.setModel(modeloTabela);    
-        jTable2.setModel(modeloTabela2);  
-    }
-    //Criando um novo array list para salvar as compras
-    public static ArrayList<prevenda.Compra> compras2 = new ArrayList<>();
-    //metodo para salvar as compras da tela 1 no array criado a cima
-    public void salvarCompra(ArrayList<prevenda.Compra> compras){
-       compras2 = compras;
-    }
-    public void atualizarTabela() {
-        modeloTabela.setRowCount(0);
-
-    
-        for (prevenda.Compra compra : compras2) {
-            modeloTabela.addRow(new Object[] { compra.getNome(),compra.qtditens(), compra.totalpreco() });
-        }
-    }   
-    private void SelecionarCompra() {
-        //pega os valores da linha selecionada e armazena nas variaveis 
-        linhaSelecionada = jTable1.getSelectedRow();
-        prevenda.Compra compra = compras2.get(linhaSelecionada);
-        String nome = compra.getNome();
-        int Quantidade = compra.qtditens();
-        double total = compra.totalpreco();
-        //Distribui os valores na tela
-        jLabel5.setText(nome );
-        jLabel10.setText(String.valueOf(total));
-        jLabel13.setText(String.valueOf(total));
-        jLabel15.setText(String.valueOf(Quantidade)); 
-        
-        // Obtém os valores da linha selecionada
-        Object[] valoresLinhaSelecionada = new Object[modeloTabela.getColumnCount()];
-        for (int i = 0; i < modeloTabela.getColumnCount(); i++) {
-            valoresLinhaSelecionada[i] = modeloTabela.getValueAt(linhaSelecionada, i);
-        }
-
-        // Adiciona a nova linha à tabela de destino
-        modeloTabela2.addRow(valoresLinhaSelecionada);
-
-        // Remove a linha selecionada da tabela fonte
-        modeloTabela.removeRow(linhaSelecionada);    
+        atualizar();
     }
  
+    public void atualizar(){
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setNumRows(0);
+        CompraD pdao = new CompraD();
+        for (Compra p : pdao.ComprasPendentes()) {
 
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getNomeCliente(),
+                p.getQtd_itens(),
+                
+                
+            });
+
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,13 +95,10 @@ public class prevendacompras extends javax.swing.JInternalFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "CLIENTE", "QTD_ITENS"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -389,16 +347,16 @@ public class prevendacompras extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(208, 208, 208))
+                .addGap(212, 212, 212))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1)
@@ -429,7 +387,7 @@ public class prevendacompras extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        atualizarTabela();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -439,37 +397,18 @@ public class prevendacompras extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        SelecionarCompra();
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if(linhaSelecionada < 0){
-            JOptionPane.showMessageDialog(null, "Selecione uma compra");
-        }else{
-            int resposta = JOptionPane.showConfirmDialog(null, "Você deseja finalizar a compra?", "Confirmação", JOptionPane.YES_NO_OPTION);
-            if (resposta == JOptionPane.YES_OPTION) {
-                //remove da tabela de compras e do array
-                compras2.remove(linhaSelecionada);
-                modeloTabela2.setRowCount(0);
-                JOptionPane.showMessageDialog(null, "Compra finalizada com sucesso");
-            }
-        }
+   
+        
          
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        if(linhaSelecionada < 0){
-            JOptionPane.showMessageDialog(null, "Selecione uma compra");
-        }else{
-            int resposta = JOptionPane.showConfirmDialog(null, "Você deseja Cancelar a compra?", "Confirmação", JOptionPane.YES_NO_OPTION);
-            if (resposta == JOptionPane.YES_OPTION) {
-                //remove da tabela de compras e do array
-                compras2.remove(linhaSelecionada);
-                modeloTabela2.setRowCount(0);
-                JOptionPane.showMessageDialog(null, "Compra cancelada com sucesso");
-            }
-        }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
 
