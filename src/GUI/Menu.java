@@ -102,6 +102,7 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jMenuItem6.setText("Tabela produtos");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,6 +111,7 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem6);
 
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jMenuItem7.setText("Tabela Clientes");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,7 +166,7 @@ public class Menu extends javax.swing.JFrame {
         relatorio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         vendasm.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        vendasm.setText("Vendas do Mês");
+        vendasm.setText("Vendas Canceladas");
         vendasm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vendasmActionPerformed(evt);
@@ -174,7 +176,7 @@ public class Menu extends javax.swing.JFrame {
 
         jCheckBoxMenuItem1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("Vendas do Dia");
+        jCheckBoxMenuItem1.setText("Vendas Finalizadas");
         jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItem1ActionPerformed(evt);

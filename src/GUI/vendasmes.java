@@ -1,9 +1,12 @@
 package GUI;
 
+import DAO.CompraD;
+import Dto.Compra;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -17,6 +20,23 @@ public class vendasmes extends javax.swing.JInternalFrame {
      */
     public vendasmes() {
         initComponents();
+        atualizar();
+    }
+    public void atualizar() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setNumRows(0);
+        CompraD pdao = new CompraD();
+        for (Compra p : pdao.RelatorioCompras("CANCELADA")) {
+
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getNomeCliente(),
+                p.getStatus(),
+                p.getForma_pagamento(),
+                p.getQtd_itens()               
+            });
+
+        }
     }
 
     /**
@@ -49,7 +69,7 @@ public class vendasmes extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
@@ -61,29 +81,14 @@ public class vendasmes extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setBackground(new java.awt.Color(51, 51, 255));
-        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"01", "sáb", "26.400", "26.400", "34.586", "34.586", "131.01%", "103.01%"},
-                {"02", "dom", "20.800", "47.200", "23.882", "58.469", "114.82%", "123.87%"},
-                {"03", "seg", "35.200", "82.400", "28.378", "86.847", "80.62%", "105.40%"},
-                {"04", "ter", "35.700", "118.100", "30.383", "117.230", "85.11%", "99.26%"},
-                {"05", "qua", "30.800", "148.900", "30.861", "148.090", "100.20%", "99.46%"},
-                {"06", "qui", "35.400", "184.300", "36.337", "184.427", "102.65%", "100.07%"},
-                {"07", "sex", "22.200", "206.500", "21.780", "206.207", "98.11%", "99.86%"},
-                {"08", "sáb", "20.800", "227.300", "23.988", "230.195", "115.33%", "101.27%"},
-                {"09", "dom", "21.100", "248.400", "16.403", "246.598", "77.74%", "99.27%"},
-                {"10", "seg", "35.400", "283.800", "36.803", "283.401", "103.96%", "99.86%"},
-                {"11", "ter", "36.000", "319.800", "38.258", "321.659", "106.27%", "100.58%"},
-                {"12", "qua", "31.100", "350.900", "38.761", "360.420", "124.63%", "102.71%"}
+
             },
             new String [] {
-                "Dia", "Sem", "Meta Venda", "Meta Acumulada", "Venda", "Venda Acumulada", "Cumpr meta vend", "Cumpr meta acum"
+                "ID", "NOME", "STATUS", "Forma_Pagamento", "QTD"
             }
         ));
-        jTable1.setToolTipText("");
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,11 +98,13 @@ public class vendasmes extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -107,9 +114,9 @@ public class vendasmes extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();

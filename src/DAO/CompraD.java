@@ -148,6 +148,121 @@ public class CompraD {
         return compras;
 
     }
+        public void FinalizarCompra(int idcompra, String f_pagamento) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
 
+        try {
+            
+            stmt = con.prepareStatement("UPDATE Compra SET status = 'Finalizado' , forma_pagamento = ? WHERE id = ?");
+            stmt.setString(1,f_pagamento);
+            stmt.setInt(2, idcompra);
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+        public void CancelarCompra(int idcompra) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            
+            stmt = con.prepareStatement("UPDATE Compra SET status = 'CANCELADA' , forma_pagamento = ? WHERE id = ?");
+            stmt.setString(1,"CANCELADA");
+            stmt.setInt(2, idcompra);
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+        public List<Compra> HistoricoCompras() {
+
+        Connection con = ConnectionFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Compra> compras = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("""
+                                        SELECT Compra.id, cliente.nome, Compra.status, Compra.forma_pagamento, COUNT(Compra_Produto.produto_id) AS quantidade_itens
+                                        FROM Compra
+                                        INNER JOIN cliente ON Compra.cliente_cpf = cliente.cpf
+                                        INNER JOIN Compra_Produto ON Compra.id = Compra_Produto.compra_id
+                                        GROUP BY Compra.id, cliente.nome, Compra.status, Compra.forma_pagamento""");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                
+                Cliente cliente = new Cliente();
+                Compra compra = new Compra(cliente);
+                cliente.setNome(rs.getString("nome"));
+                compra.setId(rs.getInt("id"));
+                compra.setQtd_itens(rs.getInt("quantidade_itens"));
+                compra.setStatus(rs.getString("status"));
+                compra.setForma_pagamento(rs.getString("forma_pagamento"));
+
+                compras.add(compra);
+            }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(ProdutoD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+
+        return compras;
+
+    }
+        public List<Compra> RelatorioCompras(String status) {
+
+        Connection con = ConnectionFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Compra> compras = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("""
+                                        SELECT Compra.id, cliente.nome, Compra.status, Compra.forma_pagamento, COUNT(Compra_Produto.produto_id) AS quantidade_itens
+                                        FROM Compra
+                                        INNER JOIN cliente ON Compra.cliente_cpf = cliente.cpf
+                                        INNER JOIN Compra_Produto ON Compra.id = Compra_Produto.compra_id
+                                        WHERE Compra.status = ?
+                                        GROUP BY Compra.id, cliente.nome, Compra.status, Compra.forma_pagamento""");
+            stmt.setString(1, status);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                
+                Cliente cliente = new Cliente();
+                Compra compra = new Compra(cliente);
+                cliente.setNome(rs.getString("nome"));
+                compra.setId(rs.getInt("id"));
+                compra.setQtd_itens(rs.getInt("quantidade_itens"));
+                compra.setStatus(rs.getString("status"));
+                compra.setForma_pagamento(rs.getString("forma_pagamento"));
+
+                compras.add(compra);
+            }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(ProdutoD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+
+        return compras;
+
+    }
    
 }

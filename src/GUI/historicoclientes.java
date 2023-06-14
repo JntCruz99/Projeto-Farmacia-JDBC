@@ -1,10 +1,13 @@
 package GUI;
 
 
+import DAO.CompraD;
+import Dto.Compra;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,8 +20,24 @@ public class historicoclientes extends javax.swing.JInternalFrame {
      */
     public historicoclientes() {
         initComponents();
+        atualizar();
     }
+    public void atualizar() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setNumRows(0);
+        CompraD pdao = new CompraD();
+        for (Compra p : pdao.HistoricoCompras()) {
 
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getNomeCliente(),
+                p.getStatus(),
+                p.getForma_pagamento(),
+                p.getQtd_itens()               
+            });
+
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,13 +60,10 @@ public class historicoclientes extends javax.swing.JInternalFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Nome", "Produto", "Quantidade", "Data", "Valor"
+                "ID", "NOME", "STATUS", "Forma_Pagamento", "QTD"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -86,9 +102,9 @@ public class historicoclientes extends javax.swing.JInternalFrame {
             .addGroup(paineldesktopLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jLabel2)
-                .addGap(128, 128, 128)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99)
+                .addGap(64, 64, 64)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
                 .addContainerGap(110, Short.MAX_VALUE))
         );
